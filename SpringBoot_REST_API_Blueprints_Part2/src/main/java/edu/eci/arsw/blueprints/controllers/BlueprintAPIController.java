@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,25 @@ public class BlueprintAPIController {
         }
     }
     
+    @RequestMapping(value = "/{author}",method = RequestMethod.GET)
+    public ResponseEntity<?> getBlueprint(@PathVariable("author") String author){
+        try{
+            return new ResponseEntity<>(bps.getBlueprintsByAuthor(author), HttpStatus.ACCEPTED);
+        } catch (BlueprintNotFoundException ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error",HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value="/{author}/{name}", method = RequestMethod.GET)
+    public ResponseEntity<?>  manejadorBlueprint(@PathVariable("author") String author,@PathVariable("name") String name ){
+        try {
+            return new ResponseEntity<>(bps.getBlueprint(author,name), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     
     
 }
