@@ -114,7 +114,8 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
  	
 	}
 	```	
-
+Creamos el metodo POST
+![](img/ARSW-LAB5-FOTO10.png)
 
 2.  Para probar que el recurso ‘planos’ acepta e interpreta
     correctamente las peticiones POST, use el comando curl de Unix. Este
@@ -132,10 +133,22 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 
 	Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.
 
+![](img/ARSW-LAB5-FOTO11.png)
 
 3. Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.
 
+	![](img/ARSW-LAB5-FOTO12.png)
+
 4. Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.
+
+	Metodo GET:
+
+	![](img/ARSW-LAB5-FOTO15.png)
+
+	![](img/ARSW-LAB5-FOTO13.png)	
+
+	![](img/ARSW-LAB5-FOTO14.png)
+
 
 
 ### Parte III

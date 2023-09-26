@@ -25,6 +25,8 @@ import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import edu.eci.arsw.blueprints.services.BlueprintsServices;
 
+
+
 /**
  *
  * @author hcadavid
@@ -67,9 +69,8 @@ public class BlueprintAPIController {
         }
     }
     
-//curl -i -X POST -HContent-Type:application/json -HAccept:application/json http://localhost:8080/blueprints/new -d '{"author":"Sergio","points":[{"x":9, "y":9}, {"x":24,"y":9}],"name":"PlanoP"}'
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> postBlueprint(@RequestBody Blueprint blueprint){
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> postBlueprint(@RequestBody Blueprint blueprint) throws BlueprintNotFoundException{
         try {
             bps.addNewBlueprint(blueprint);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -80,7 +81,7 @@ public class BlueprintAPIController {
 
     }
 
-    @RequestMapping(path = "/{author}/{bpname}", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(path = "/{author}/{bpname}", method = RequestMethod.PUT)
     public ResponseEntity<?> putBlueprint(@PathVariable String author, @PathVariable String bpname, @RequestBody Blueprint blueprint){
         Blueprint blueprintNew = null;
         try {
