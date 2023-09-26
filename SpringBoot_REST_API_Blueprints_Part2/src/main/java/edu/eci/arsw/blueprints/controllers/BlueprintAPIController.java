@@ -10,8 +10,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import edu.eci.arsw.blueprints.services.BlueprintsServices;
 
@@ -64,6 +67,34 @@ public class BlueprintAPIController {
         }
     }
     
+//curl -i -X POST -HContent-Type:application/json -HAccept:application/json http://localhost:8080/blueprints/new -d '{"author":"Sergio","points":[{"x":9, "y":9}, {"x":24,"y":9}],"name":"PlanoP"}'
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> postBlueprint(@RequestBody Blueprint blueprint){
+        try {
+            bps.addNewBlueprint(blueprint);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (BlueprintPersistenceException ex) {
+            //Logger.getLogger(BlueprintAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("No se registro",HttpStatus.FORBIDDEN);
+        }
+
+    }
+
+    @RequestMapping(path = "/{author}/{bpname}", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> putBlueprint(@PathVariable String author, @PathVariable String bpname, @RequestBody Blueprint blueprint){
+        Blueprint blueprintNew = null;
+        try {
+            blueprintNew = bps.getBlueprint(author, bpname);
+
+            blueprintNew.setAuthor(blueprint.getAuthor());
+            blueprintNew.setName(blueprint.getName());
+            blueprintNew.setPoints(blueprint.getPoints());
+
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (BlueprintNotFoundException e) {
+            return new ResponseEntity<>("Espera",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }
 
