@@ -169,7 +169,7 @@ El componente BlueprintsRESTAPI funcionará en un entorno concurrente. Es decir,
 
 Ajuste el código para suprimir las condiciones de carrera. Tengan en cuenta que simplemente sincronizar el acceso a las operaciones de persistencia/consulta DEGRADARÁ SIGNIFICATIVAMENTE el desempeño de API, por lo cual se deben buscar estrategias alternativas.
 
-	![](img/ARSW-LAB5-FOTO12.PNG)
+![](img/ARSW-LAB5-FOTO16.PNG)
 
 Escriba su análisis y la solución aplicada en el archivo ANALISIS_CONCURRENCIA.txt
 
