@@ -2,7 +2,9 @@
 
 ### Arquitecturas de Software
 
-
+### Intengrantes
+	Sergio González
+	Nicolas Castro
 
 #### API REST para la gestión de planos.
 
@@ -115,7 +117,7 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 	}
 	```	
 Creamos el metodo POST
-![](img/ARSW-LAB5-FOTO10.png)
+![](img/ARSW-LAB5-FOTO10.PNG)
 
 2.  Para probar que el recurso ‘planos’ acepta e interpreta
     correctamente las peticiones POST, use el comando curl de Unix. Este
@@ -133,21 +135,21 @@ Creamos el metodo POST
 
 	Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.
 
-![](img/ARSW-LAB5-FOTO11.png)
+	![](img/ARSW-LAB5-FOTO11.PNG)
 
 3. Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.
 
-	![](img/ARSW-LAB5-FOTO12.png)
+	![](img/ARSW-LAB5-FOTO12.PNG)
 
 4. Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.
 
 	Metodo GET:
 
-	![](img/ARSW-LAB5-FOTO15.png)
+	![](img/ARSW-LAB5-FOTO15.PNG)
 
-	![](img/ARSW-LAB5-FOTO13.png)	
+	![](img/ARSW-LAB5-FOTO13.PNG)
 
-	![](img/ARSW-LAB5-FOTO14.png)
+	![](img/ARSW-LAB5-FOTO14.PNG)
 
 
 
@@ -156,9 +158,18 @@ Creamos el metodo POST
 El componente BlueprintsRESTAPI funcionará en un entorno concurrente. Es decir, atederá múltiples peticiones simultáneamente (con el stack de aplicaciones usado, dichas peticiones se atenderán por defecto a través múltiples de hilos). Dado lo anterior, debe hacer una revisión de su API (una vez funcione), e identificar:
 
 * Qué condiciones de carrera se podrían presentar?
+
+	La condición de carrera se presentan cuando guardamos y consultamos un plano al mismo tiempo y/o modificamos un plano cuando lo estamos consultando.
+
 * Cuales son las respectivas regiones críticas?
 
+	La region critica a que pudimos encontrar está en la variable blueprints,
+    esta variable  HashMap puede causar condiciones de carrera si múltiples hilos intentan acceder o modificar datos al mismo tiempo,
+    porque HashMap no es seguro para subprocesos.
+
 Ajuste el código para suprimir las condiciones de carrera. Tengan en cuenta que simplemente sincronizar el acceso a las operaciones de persistencia/consulta DEGRADARÁ SIGNIFICATIVAMENTE el desempeño de API, por lo cual se deben buscar estrategias alternativas.
+
+	![](img/ARSW-LAB5-FOTO12.PNG)
 
 Escriba su análisis y la solución aplicada en el archivo ANALISIS_CONCURRENCIA.txt
 

@@ -1,0 +1,5 @@
+análisis y la solución:
+
+    Antes usábamos HashMap, este no es seguro para hilos, ya que múltiples hilos accediendo o modificando blueprints podrían causar condiciones de carrera y resultados inesperados.
+    Así que lo cambiamos a ConcurrentHashMap, que está diseñado para manejar operaciones concurrentes de manera segura.
+    Esto elimina la posibilidad de condiciones de carrera y garantiza que las operaciones en blueprints sean seguras con multi-hilo.
